@@ -1,0 +1,15 @@
+# Optional zero-cost host for a shared company prototype.
+# Check Render's current free-plan terms/usage limits before deploying.
+services:
+  - type: web
+    name: troth-academy-prototype
+    runtime: node
+    plan: free
+    buildCommand: npm ci --prefix client && npm ci --prefix server && npm run build --prefix server && npm run build --prefix client
+    startCommand: node server/dist/preview-server.js
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.21.0
+      - key: JWT_SECRET
+        generateValue: true
